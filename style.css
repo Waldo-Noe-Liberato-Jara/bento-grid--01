@@ -62,14 +62,11 @@ body {
   min-height: 100vh;
   background-color: var(--background);
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
+  gap: var(--gap-8);
   padding: var(--gap-4) 0;
-}
-
-img {
-  width: 100px;
-  display: none;
 }
 
 p,
@@ -85,14 +82,19 @@ b {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   grid-template-rows: 220px 170px 170px;
+  grid-template-areas: "sub-container card-3 card-3 card-4"
+    "sub-container card-5 card-6 card-4"
+    "sub-container card-7 card-8 card-8";
   gap: var(--gap-5);
 }
 
 .sub-container {
-  grid-row: span 3;
+  grid-area: sub-container;
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: repeat(2, 1fr);
+  grid-template-areas: "card-1"
+    "card-2";
   gap: var(--gap-5);
 }
 
@@ -103,27 +105,36 @@ b {
   overflow: hidden;
 }
 
-.card-1 {}
+.card-1 {
+  grid-area: card-1;
+}
 
-.card-2 {}
+.card-2 {
+  grid-area: card-2;
+}
 
 .card-3 {
-  grid-column: span 2 / span 2;
-
+  grid-area: card-3;
 }
 
 .card-4 {
-  grid-row: span 2/ span 2;
+  grid-area: card-4;
 }
 
-.card-5 {}
+.card-5 {
+  grid-area: card-5;
+}
 
-.card-6 {}
+.card-6 {
+  grid-area: card-6;
+}
 
-.card-7 {}
+.card-7 {
+  grid-area: card-7;
+}
 
 .card-8 {
-  grid-column: span 2 / span 2;
+  grid-area: card-8;
 }
 
 
@@ -151,6 +162,9 @@ b {
 .card-1 img {
   display: block;
   width: 100%;
+  max-width: 118px;
+  height: 56px;
+  align-self: center;
 }
 
 
@@ -175,6 +189,9 @@ b {
 .card-2 img {
   display: block;
   width: 100%;
+  max-width: 149px;
+  height: 151px;
+  align-self: center;
 }
 
 
@@ -258,6 +275,7 @@ b {
 
 .card-5 {
   background-color: var(--card-5-7);
+  justify-content: space-between;
   gap: var(--gap-2);
 }
 
@@ -283,6 +301,7 @@ b {
 .card-6 {
   background-color: var(--card-2-6);
   justify-content: space-between;
+  position: relative;
 }
 
 .card-6 p {
@@ -297,10 +316,12 @@ b {
 .card-6 img {
   display: block;
   width: 100%;
-  height: 65px;
-  object-fit: cover;
-  object-position: top center;
-  padding: 0 1rem 0 1rem;
+  max-width: 149px;
+  height: auto;
+  max-height: 137px;
+  position: absolute;
+  bottom: -50px;
+  align-self: center;
 }
 
 .card-7 {
@@ -340,24 +361,83 @@ b {
   background-color: var(--card-3-8);
   flex-direction: row;
   gap: var(--gap-4);
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
 }
 
 .card-8 p {
-  flex: 1 1 0%;
   font-size: var(--text-2xl);
   font-weight: var(--font-medium);
   letter-spacing: -2px;
   word-spacing: 2px;
   line-height: 1;
   color: var(--card-5-7);
-  padding: 1rem 1rem 1rem 0;
   align-self: center;
 }
 
 .card-8 img {
   display: block;
-  width: 170px;
+  width: 100%;
+  max-width: 170px;
   height: 100%;
+  max-height: 150px;
   object-fit: contain;
-  padding: 1rem 0 1rem 1rem;
+}
+
+@media screen and (max-width: 850px) {
+  .container {
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: 170px 170px 170px 170px auto;
+
+    grid-template-areas: "card-3 card-3"
+      "card-5 card-4"
+      "card-6 card-4"
+      "card-7 card-7"
+      "card-8 card-8"
+      "sub-container sub-container";
+    max-width: 382px;
+  }
+
+  .sub-container {
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: 290px;
+    grid-template-areas: "card-1 card-2";
+  }
+}
+
+
+@media screen and (max-width: 375px) {
+  .container {
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(3, 170px) 410px 170px 356px auto;
+    grid-template-areas: "card-3"
+      "card-5"
+      "card-6"
+      "card-4"
+      "card-7"
+      "card-8"
+      "sub-container";
+    max-width: 360px;
+  }
+
+  .sub-container {
+    grid-template-columns: 1fr;
+    grid-auto-rows: 290px;
+    grid-template-areas: "card-1"
+      "card-2";
+  }
+
+  .card-3 p:nth-child(1) {
+    font-size: var(--text-2xl);
+  }
+
+  .card-8 {
+    flex-direction: column;
+  }
+
+  .card-8 p {
+    text-align: center;
+  }
+
 }
